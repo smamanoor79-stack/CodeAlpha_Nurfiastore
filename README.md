@@ -85,14 +85,14 @@ npm run dev
 
 ### 3. Frontend setup
 ```bash
-cd ../frontend
+cd frontend
 npm install
 npm run dev
 ```
 
 ### 4. Admin Panel setup
 ```bash
-cd ../Adminpanel
+cd Adminpanel
 npm install
 npm run dev
 ```
@@ -100,13 +100,12 @@ npm run dev
 ---
 
 ## 📄 Notes
-
 - Each folder (`frontend`, `backend`, `Adminpanel`) runs independently and can be deployed separately.
-- Environment variables (`.env`) are excluded from version control for security — see `.gitignore`.
+- Environment variables (`.env`) for all three folders — `frontend/.env`, `backend/.env`, and `Adminpanel/.env` — are excluded from version control via `.gitignore` and are never pushed to GitHub. Each contributor must create their own `.env` file locally with the required keys (MongoDB URI, JWT secret, Cloudinary keys, etc.).
 
 ## Live Demo
 
-https://nurfia-ecommerce-store.vercel.app/index.html
+https://nurfia-ecommerce-store.vercel.app
 
 Deployed on a free tier, May take some seconds to awake the backend from sleep!
 ---
