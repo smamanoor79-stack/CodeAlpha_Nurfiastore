@@ -1,7 +1,7 @@
 import { getAllProducts, addToBackendWishlist, removeFromBackendWishlist, isLoggedIn } from './api.js';
 import { addToCart } from './cart.js';
 
-// Color name map
+
 const colorNames = {
   '#000000': 'Black', '#FFFFFF': 'White', '#808080': 'Gray',
   '#FF0000': 'Red', '#0000FF': 'Blue', '#90EE90': 'Green',
@@ -22,7 +22,7 @@ let activeSizes = [];
 let maxPrice = 150;
 let sortBy = 'default';
 
-// ===== WISHLIST HELPERS (localStorage + backend sync) =====
+// ===== WISHLIST HELPERS =====
 function getWishlist() {
   return JSON.parse(localStorage.getItem('nurfia_wishlist') || '[]');
 }
@@ -220,11 +220,11 @@ function renderProducts() {
       <div class="shop-card-img">
         ${p.discount ? `<span class="shop-badge">${p.discount}%</span>` : ''}
         ${p.image && p.image.endsWith('.mp4')
-          ? `<video src="${p.image}" autoplay muted loop playsinline></video>`
-          : p.video
-            ? `<video src="${p.video}" autoplay muted loop playsinline></video>`
-            : `<img src="${p.image}" alt="${p.name}" />`
-        }
+        ? `<video src="${p.image}" autoplay muted loop playsinline></video>`
+        : p.video
+          ? `<video src="${p.video}" autoplay muted loop playsinline></video>`
+          : `<img src="${p.image}" alt="${p.name}" />`
+      }
         <div class="shop-card-actions">
           <button class="shop-action-btn shop-wishlist-btn" title="Wishlist" style="${inWishlist ? 'color:#e00;' : ''}">
             <i class="${inWishlist ? 'fa-solid' : 'fa-regular'} fa-heart"></i>

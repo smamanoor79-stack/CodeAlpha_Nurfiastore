@@ -26,7 +26,7 @@ let isGridView = true;
 let activeStockFilter = 'all';
 let searchQuery = '';
 
-// ===== WISHLIST HELPERS (localStorage + backend sync) =====
+
 function getWishlist() {
   return JSON.parse(localStorage.getItem('nurfia_wishlist') || '[]');
 }
@@ -70,7 +70,6 @@ function toggleWishlistShop(id, btn, product) {
   saveWishlist(list);
 }
 
-// ===== INIT — API SE PRODUCTS FETCH KARO =====
 async function init() {
   try {
     products = await getAllProducts();
@@ -80,11 +79,11 @@ async function init() {
   } catch (err) {
     console.error('Products load nahi hue:', err);
     const grid = document.getElementById('shopGrid');
-    if (grid) grid.innerHTML = `<p style="padding:40px;text-align:center;color:red;">Products load karne mein error aaya. Backend chal raha hai?</p>`;
+    if (grid) grid.innerHTML = `<p style="padding:40px;text-align:center;color:red;">Backend is not working</p>`;
   }
 }
 
-// ===== BUILD FILTERS DYNAMICALLY =====
+
 function buildFilters() {
 
   // 1. Categories
@@ -339,7 +338,7 @@ function renderProducts() {
   });
 }
 
-// ===== PAGINATION — SAME AS BEFORE =====
+// ===== PAGINATION  =====
 function renderPagination() {
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   const pagination = document.getElementById('shopPagination');

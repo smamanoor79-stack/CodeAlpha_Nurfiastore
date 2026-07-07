@@ -178,12 +178,11 @@ async function initProductPage(p) {
     addToCart(p._id, qty);
   });
 
-  // ===== WISHLIST — backend connected =====
+  // ===== WISHLIST =====
 
 
   const wishlistBtn = document.getElementById('productWishlist');
   if (wishlistBtn) {
-    // Check karo pehle se wishlist mein hai ya nahi
     let inWishlist = false;
     if (isLoggedIn()) {
       try {
@@ -196,7 +195,6 @@ async function initProductPage(p) {
       } catch { }
     }
 
-    // Initial state set karo
     const icon = wishlistBtn.querySelector('i');
     if (inWishlist) {
       icon?.classList.replace('fa-regular', 'fa-solid');

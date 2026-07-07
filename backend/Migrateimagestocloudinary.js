@@ -14,6 +14,7 @@
 //   - require('./models/Product')     -> path must match your real model
 //   - process.env.MONGO_URI           -> must match the variable name in your .env
 
+
 const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');

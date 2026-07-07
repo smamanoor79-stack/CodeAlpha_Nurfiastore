@@ -11,7 +11,7 @@
 
 .cart-breadcrumb {
   padding: 20px 40px 12px;
-  margin-top: 56px;   /* header ki fixed height jitna space */
+  margin-top: 56px;   
   font-size: 13px;
   color: #888;
   border-bottom: 1px solid #eee;
@@ -476,10 +476,15 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 9999;
-  display: flex;
-  align-items: center;
+  display: none;
+  align-items: flex-start;
   justify-content: center;
   padding: 24px;
+  overflow-y: auto;
+}
+
+.order-success-overlay.active {
+  display: flex;
 }
 
 .order-success-modal {
@@ -490,6 +495,9 @@
   width: 100%;
   text-align: center;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
 }
 
 .success-icon {
@@ -555,4 +563,96 @@
 
 .bank-details-box p {
   margin: 4px 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .checkout-page {
+    padding: 40px 16px 60px;
+  }
+
+  .cart-breadcrumb {
+    padding: 16px 16px 12px;
+  }
+
+  .checkout-section-title {
+    font-size: 19px;
+    margin-bottom: 18px;
+  }
+
+  .order-summary {
+    padding: 20px;
+    position: static;
+  }
+
+  .shipment-options,
+  .shipment-option {
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .order-success-overlay {
+    position: static;
+    background: #fff;
+    padding: 0;
+    display: none;
+    overflow: visible;
+  }
+
+  .order-success-overlay.active {
+    display: block;
+  }
+
+  body.success-active > *:not(.order-success-overlay) {
+    display: none !important;
+  }
+
+  body.success-active {
+    overflow-y: auto !important;
+    height: auto !important;
+  }
+
+  .order-success-modal {
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  max-width: 100%;
+  width: 100%;
+  min-height: 100dvh;
+  max-height: none;
+  overflow-y: visible;
+  margin: 0;
+  padding: 60px 24px calc(40px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;   
+}
+
+  .success-icon {
+    font-size: 44px;
+    margin-bottom: 16px;
+  }
+
+  .order-success-modal h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .order-success-modal p {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .success-details {
+    padding: 16px 18px;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .continue-shopping-btn {
+  width: 100%;
+  padding: 15px 24px;
+  margin-bottom: 20px;
+}
 }

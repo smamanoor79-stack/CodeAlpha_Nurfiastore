@@ -2,7 +2,7 @@ import { getAllProducts, getToken, getUser, isLoggedIn, getBackendCart, clearBac
 const FREE_SHIPPING_THRESHOLD = 500;
 let discountPercent = 0;
 let products = [];
-let cartItems = []; // backend cart items
+let cartItems = []; 
 
 // ===== CART FETCH =====
 async function getCart() {
@@ -18,11 +18,10 @@ async function getCart() {
 // ===== INIT =====
 async function init() {
   if (!isLoggedIn()) {
-    // Modal open karo
     document.getElementById('authModal')?.classList.add('active');
     document.getElementById('authModalOverlay')?.classList.add('active');
 
-    // Sirf form sections blur karo — poora checkout-page nahi
+    
     const elementsToBlur = [
       document.querySelector('.checkout-layout'),
       document.querySelector('.checkout-notice'),
@@ -39,7 +38,7 @@ async function init() {
       }
     });
 
-    // Auth modal aur overlay ko blur se bahar rakho
+  
     const authModal = document.getElementById('authModal');
     const authOverlay = document.getElementById('authModalOverlay');
     if (authModal) {
@@ -52,14 +51,12 @@ async function init() {
       authOverlay.style.opacity = '1';
     }
 
-    // Top notice
     const notice = document.createElement('div');
     notice.style.cssText = 'position:fixed;top:max(12px, env(safe-area-inset-top));left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:10px 18px;z-index:100000;font-family:"Instrument Sans",sans-serif;font-size:13px;letter-spacing:0.5px;max-width:90vw;text-align:center;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.25);';
     notice.textContent = 'Please login to continue checkout';
     document.body.appendChild(notice);
 
-    // Agar user modal close kare (X button ya overlay click) bina login kiye,
-    // to usay checkout pe blurred hi chhorne ke bajaye cart pe bhej do
+    
     const redirectIfNotLoggedIn = () => {
       if (!isLoggedIn()) {
         window.location.href = 'cart.html';
@@ -342,7 +339,12 @@ document.getElementById('placeOrderBtn')?.addEventListener('click', async () => 
     }
 
     const overlay = document.getElementById('successOverlay');
-    if (overlay) overlay.style.display = 'flex';
+    if (overlay) {
+      overlay.style.display = '';
+      overlay.classList.add('active');
+      document.body.classList.add('success-active');
+      window.scrollTo(0, 0);
+    }
 
     // Cart badge reset
     document.querySelectorAll('.cart-count:not(.wishlist-count)').forEach(b => b.textContent = '0');

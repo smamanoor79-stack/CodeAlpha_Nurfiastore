@@ -278,17 +278,16 @@ document.getElementById('registerBtn')?.addEventListener('click', async () => {
       clearAuthMessages('registerPanel');
       updateUserIcon();
 
-      // ✅ Checkout page par ho to reload karo taake init() fresh chale
+      await syncCartToBackend();
+      await syncWishlistToBackend();
+      fetchAndUpdateWishlistBadge();
+
       if (window.location.pathname.includes('checkout.html')) {
         window.location.reload();
         return;
       }
 
       switchTab('profile');
-      // ✅ Register ke baad bhi sync karo
-      await syncCartToBackend();
-      await syncWishlistToBackend();
-      fetchAndUpdateWishlistBadge();
     }, 1000);
   } catch (err) {
     showAuthError('registerPanel', err.message);
@@ -312,16 +311,15 @@ document.getElementById('loginBtn')?.addEventListener('click', async () => {
       updateUserIcon();
       closeAuthModal();
 
-      //  Checkout page par ho to reload karo taake init() fresh chale
+      await syncCartToBackend();
+      await syncWishlistToBackend();
+      fetchAndUpdateWishlistBadge();
+
       if (window.location.pathname.includes('checkout.html')) {
         window.location.reload();
         return;
       }
 
-      //  Login ke baad localStorage → backend sync
-      await syncCartToBackend();
-      await syncWishlistToBackend();
-      fetchAndUpdateWishlistBadge();
       getBackendCart().then(data => {
         const count = (data.cartItems || []).reduce((sum, item) => sum + (item.quantity || 1), 0);
         document.querySelectorAll('.cart-count:not(.wishlist-count)').forEach(b => b.textContent = count);
@@ -339,12 +337,9 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
   updateUserIcon();
   switchTab('login');
   closeAuthModal();
-  // ✅ Logout pe badges reset — localStorage counts dikhao
-  const localCart = JSON.parse(localStorage.getItem('nurfia_cart') || '[]');
-  const localWishlist = JSON.parse(localStorage.getItem('nurfia_wishlist') || '[]');
-  const cartCount = localCart.reduce((sum, item) => sum + (item.qty || 1), 0);
-  document.querySelectorAll('.cart-count:not(.wishlist-count)').forEach(b => b.textContent = cartCount);
-  document.querySelectorAll('.wishlist-count').forEach(b => b.textContent = localWishlist.length);
+
+  document.querySelectorAll('.cart-count:not(.wishlist-count)').forEach(b => b.textContent = '0');
+  document.querySelectorAll('.wishlist-count').forEach(b => b.textContent = '0');
 });
 
 function updateUserIcon() {
@@ -363,7 +358,6 @@ function updateUserIcon() {
     userIcon.removeAttribute('title');
   }
 
-  // Orders icon sirf logged in users ke liye dikhao
   const ordersLink = document.getElementById('ordersIconLink');
   if (ordersLink) {
     ordersLink.style.display = user ? 'inline-block' : 'none';
@@ -373,14 +367,12 @@ updateUserIcon();
 
 // ===== BADGES ON PAGE LOAD =====
 if (isLoggedIn()) {
-  // Logged in — backend se badges
   fetchAndUpdateWishlistBadge();
   getBackendCart().then(data => {
     const count = (data.cartItems || []).reduce((sum, item) => sum + (item.quantity || 1), 0);
     document.querySelectorAll('.cart-count:not(.wishlist-count)').forEach(b => b.textContent = count);
   }).catch(() => { });
 } else {
-  // Guest — localStorage se badges
   const localCart = JSON.parse(localStorage.getItem('nurfia_cart') || '[]');
   const localWishlist = JSON.parse(localStorage.getItem('nurfia_wishlist') || '[]');
   const cartCount = localCart.reduce((sum, item) => sum + (item.qty || 1), 0);

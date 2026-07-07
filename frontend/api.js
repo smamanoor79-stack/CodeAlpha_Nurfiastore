@@ -1,6 +1,6 @@
 const isProd = window.location.hostname !== 'localhost';
 export const BASE_URL = isProd
-  ? 'https://nurfia-backend.bonto.run'  // Render deploy hone ke baad yahan actual URL dalna
+  ? 'https://nurfia-backend.bonto.run'
   : 'http://localhost:5000';
 
 export function getImageUrl(imagePath) {
@@ -32,13 +32,14 @@ export function getUser() {
 export function logoutUser() {
   localStorage.removeItem('nurfia_token');
   localStorage.removeItem('nurfia_user');
+  localStorage.removeItem('nurfia_cart');
+  localStorage.removeItem('nurfia_wishlist');
 }
 
 export function isLoggedIn() {
   return !!getToken();
 }
 
-// Main fetch wrapper — token auto-attach karta hai
 async function apiFetch(endpoint, options = {}) {
   const token = getToken();
 

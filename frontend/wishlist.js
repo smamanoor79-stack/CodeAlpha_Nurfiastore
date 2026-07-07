@@ -2,7 +2,7 @@
 import { getAllProducts, getBackendWishlist, addToBackendWishlist, removeFromBackendWishlist, isLoggedIn, getImageUrl } from './api.js';
 import { addToCart } from './cart.js';
 
-let wishlistItems = []; // backend se aaya hua array of items
+let wishlistItems = []; 
 let products = [];
 
 const tableBody = document.getElementById('wishlistTableBody');
@@ -16,7 +16,6 @@ export function updateGlobalWishlistBadges(count) {
   });
 }
 
-//  Backend se wishlist fetch karo aur badge update karo
 export async function fetchAndUpdateWishlistBadge() {
   if (!isLoggedIn()) {
     updateGlobalWishlistBadges(0);
@@ -34,7 +33,6 @@ export async function fetchAndUpdateWishlistBadge() {
   }
 }
 
-// localStorage wishlist (guest) ko backend pe push karo after login
 export async function syncWishlistToBackend() {
   if (!isLoggedIn()) return;
   const localIds = JSON.parse(localStorage.getItem('nurfia_wishlist') || '[]');
@@ -52,16 +50,13 @@ async function init() {
   products = await getAllProducts();
 
   if (isLoggedIn()) {
-    // Backend se fetch karo aur localStorage sync karo
     wishlistItems = await fetchAndUpdateWishlistBadge();
-    // localStorage bhi update karo taaki renderProducts sahi dikhaye
     const ids = wishlistItems.map(item => item.product?._id || item.product);
     localStorage.setItem('nurfia_wishlist', JSON.stringify(ids));
   } else {
-    // Logout mein localStorage se dikhao
     const ids = JSON.parse(localStorage.getItem('nurfia_wishlist') || '[]');
     wishlistItems = ids.map(id => ({ product: id }));
-    updateGlobalWishlistBadges(ids.length); // FIX: actual count, hardcoded 0 nahi
+    updateGlobalWishlistBadges(ids.length); 
   }
 
   renderWishlistPage();
@@ -81,7 +76,7 @@ export function renderWishlistPage() {
   if (actionsRow) actionsRow.style.display = 'flex';
   if (emptyContainer) emptyContainer.style.display = 'none';
 
-  // Backend wishlist item mein product field hoti hai
+ 
   const wishlistProducts = wishlistItems.map(item => {
     const id = item.product?._id || item.product;
     return products.find(p => p._id === id);
@@ -132,7 +127,7 @@ function bindActionTriggers() {
         if (isLoggedIn()) {
           await removeFromBackendWishlist(targetId);
         } else {
-          // Guest: localStorage se hi remove karo
+         
           const ids = JSON.parse(localStorage.getItem('nurfia_wishlist') || '[]');
           const updated = ids.filter(id => id !== targetId);
           localStorage.setItem('nurfia_wishlist', JSON.stringify(updated));
@@ -160,7 +155,7 @@ function bindActionTriggers() {
 document.getElementById('clearWishlistBtn')?.addEventListener('click', async () => {
   try {
     if (isLoggedIn()) {
-      // Backend pe clear endpoint nahi hai, toh ek ek remove karo
+
       await Promise.all(
         wishlistItems.map(item => {
           const id = item.product?._id || item.product;
@@ -168,7 +163,7 @@ document.getElementById('clearWishlistBtn')?.addEventListener('click', async () 
         })
       );
     } else {
-      // Guest: localStorage hi clear karo
+      
       localStorage.removeItem('nurfia_wishlist');
     }
     wishlistItems = [];

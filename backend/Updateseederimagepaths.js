@@ -1,7 +1,4 @@
 
-// HOW TO RUN (from backend project root):
-//   node updateSeederImagePaths.js
-
 const fs = require('fs');
 const path = require('path');
 
@@ -14,7 +11,6 @@ let seederContent = fs.readFileSync(SEEDER_PATH, 'utf-8');
 let replacedCount = 0;
 
 for (const [localPath, cloudinaryUrl] of Object.entries(urlMap)) {
-  // Matches both: image: "/images/x.webp"  AND  images: ["/images/x.webp"]
   const searchPattern = `"${localPath}"`;
   const replacement = `"${cloudinaryUrl}"`;
 

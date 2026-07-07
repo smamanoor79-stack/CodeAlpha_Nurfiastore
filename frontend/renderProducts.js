@@ -30,7 +30,7 @@ function toggleWishlist(id, btn, product = {}) {
     btn.innerHTML = '<i class="fa-regular fa-heart"></i>';
     btn.style.background = '#fff';
     btn.style.color = '#1a1a1a';
-    // Backend se bhi remove karo, sirf agar logged in ho
+
     if (isLoggedIn()) {
       removeFromBackendWishlist(id).catch(err => console.error(err));
     }
@@ -40,7 +40,7 @@ function toggleWishlist(id, btn, product = {}) {
     btn.style.background = '#000';
     btn.style.color = '#fff';
     showWishlistModal(id);
-    // Backend pe bhi add karo, sirf agar logged in ho
+
     if (isLoggedIn()) {
       addToBackendWishlist(
         id,

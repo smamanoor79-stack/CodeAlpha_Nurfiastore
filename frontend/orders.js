@@ -44,7 +44,6 @@ function renderOrders(orders) {
     return;
   }
 
-  // Sab se naya order pehle
   const sorted = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   ordersList.innerHTML = sorted.map(order => {

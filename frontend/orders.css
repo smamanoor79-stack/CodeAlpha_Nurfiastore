@@ -1,4 +1,4 @@
-/* ===== ORDERS PAGE ===== */
+
 .orders-page {
   max-width: 900px;
   margin: 0 auto;
@@ -13,7 +13,7 @@
   color: #1a1a1a;
 }
 
-/* ===== LOADING / EMPTY STATES ===== */
+
 .orders-loading {
   text-align: center;
   padding: 60px 0;

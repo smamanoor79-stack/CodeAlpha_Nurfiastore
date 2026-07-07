@@ -30,7 +30,6 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
   sendBtn.textContent = 'SENDING...';
 
   try {
-    // ✅ Backend ko message bhejo
     const res = await fetch(`${BASE_URL}/api/contact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -43,16 +42,13 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
       throw new Error(data.message || 'Failed to send message.');
     }
 
-    // Show success message
     success.classList.add('show');
 
-    // Reset form
     nameInput.value    = '';
     emailInput.value   = '';
     subjectInput.value = '';
     messageInput.value = '';
-
-    // Hide after 4 seconds
+    
     setTimeout(() => success.classList.remove('show'), 4000);
 
   } catch (err) {
