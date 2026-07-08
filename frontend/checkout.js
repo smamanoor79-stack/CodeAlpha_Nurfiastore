@@ -2,7 +2,7 @@ import { getAllProducts, getToken, getUser, isLoggedIn, getBackendCart, clearBac
 const FREE_SHIPPING_THRESHOLD = 500;
 let discountPercent = 0;
 let products = [];
-let cartItems = []; 
+let cartItems = [];
 
 // ===== CART FETCH =====
 async function getCart() {
@@ -21,7 +21,7 @@ async function init() {
     document.getElementById('authModal')?.classList.add('active');
     document.getElementById('authModalOverlay')?.classList.add('active');
 
-    
+
     const elementsToBlur = [
       document.querySelector('.checkout-layout'),
       document.querySelector('.checkout-notice'),
@@ -38,7 +38,7 @@ async function init() {
       }
     });
 
-  
+
     const authModal = document.getElementById('authModal');
     const authOverlay = document.getElementById('authModalOverlay');
     if (authModal) {
@@ -56,7 +56,7 @@ async function init() {
     notice.textContent = 'Please login to continue checkout';
     document.body.appendChild(notice);
 
-    
+
     const redirectIfNotLoggedIn = () => {
       if (!isLoggedIn()) {
         window.location.href = 'cart.html';
@@ -182,11 +182,11 @@ document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
 function validateForm() {
   let valid = true;
   const fields = [
-    { id: 'firstName',     errId: 'firstNameErr', msg: 'First name is required.' },
-    { id: 'lastName',      errId: 'lastNameErr',  msg: 'Last name is required.' },
-    { id: 'streetAddress', errId: 'streetErr',    msg: 'Street address is required.' },
-    { id: 'city',          errId: 'cityErr',      msg: 'Town / City is required.' },
-    { id: 'zipCode',       errId: 'zipErr',       msg: 'ZIP Code is required.' },
+    { id: 'firstName', errId: 'firstNameErr', msg: 'First name is required.' },
+    { id: 'lastName', errId: 'lastNameErr', msg: 'Last name is required.' },
+    { id: 'streetAddress', errId: 'streetErr', msg: 'Street address is required.' },
+    { id: 'city', errId: 'cityErr', msg: 'Town / City is required.' },
+    { id: 'zipCode', errId: 'zipErr', msg: 'ZIP Code is required.' },
   ];
 
   fields.forEach(f => {
@@ -266,11 +266,11 @@ document.getElementById('placeOrderBtn')?.addEventListener('click', async () => 
     const total = subtotal + shipping;
 
     const firstName = document.getElementById('firstName')?.value || '';
-    const lastName  = document.getElementById('lastName')?.value || '';
-    const email     = document.getElementById('email')?.value || '';
-    const address   = document.getElementById('streetAddress')?.value || '';
-    const city      = document.getElementById('city')?.value || '';
-    const zipCode   = document.getElementById('zipCode')?.value || '';
+    const lastName = document.getElementById('lastName')?.value || '';
+    const email = document.getElementById('email')?.value || '';
+    const address = document.getElementById('streetAddress')?.value || '';
+    const city = document.getElementById('city')?.value || '';
+    const zipCode = document.getElementById('zipCode')?.value || '';
 
     const token = getToken();
     if (!token) {
@@ -280,7 +280,6 @@ document.getElementById('placeOrderBtn')?.addEventListener('click', async () => 
       return;
     }
 
-    // ===== ORDER PAYLOAD =====
     const orderData = {
       orderItems: cartItems.map(item => ({
         product: item.product?._id || item.product,
@@ -290,6 +289,8 @@ document.getElementById('placeOrderBtn')?.addEventListener('click', async () => 
         quantity: item.quantity
       })),
       shippingAddress: {
+        fullName: `${firstName} ${lastName}`,
+        email,
         address,
         city,
         postalCode: zipCode,
@@ -298,7 +299,6 @@ document.getElementById('placeOrderBtn')?.addEventListener('click', async () => 
       paymentMethod: paymentRadio?.value || 'cod',
       totalPrice: total
     };
-
     // ===== API CALL =====
     const res = await fetch(`${BASE_URL}/api/orders`, {
       method: 'POST',
@@ -350,9 +350,9 @@ document.getElementById('placeOrderBtn')?.addEventListener('click', async () => 
     document.querySelectorAll('.cart-count:not(.wishlist-count)').forEach(b => b.textContent = '0');
     cartItems = [];
 
-  } catch (err) {
-    console.error('Order error:', err);
-    alert('Order place karne mein error: ' + err.message);
+ } catch (err) {
+  console.error('Order error:', err);
+  alert('Sorry, Order can;t be placed, fill all the requirments or contact us');
   } finally {
     btn.disabled = false;
     btn.textContent = 'PLACE ORDER';
@@ -360,7 +360,7 @@ document.getElementById('placeOrderBtn')?.addEventListener('click', async () => 
 });
 
 // ===== LIVE VALIDATION =====
-['firstName','lastName','streetAddress','city','zipCode','email'].forEach(id => {
+['firstName', 'lastName', 'streetAddress', 'city', 'zipCode', 'email'].forEach(id => {
   document.getElementById(id)?.addEventListener('input', () => {
     const errId = {
       firstName: 'firstNameErr', lastName: 'lastNameErr',

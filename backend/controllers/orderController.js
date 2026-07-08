@@ -1,6 +1,5 @@
 const Order = require('../models/Order');
 
-// Place new order
 exports.placeOrder = async (req, res) => {
   const { orderItems, shippingAddress, paymentMethod, totalPrice } = req.body;
 
@@ -41,6 +40,19 @@ exports.getOrderById = async (req, res) => {
       return res.status(404).json({ message: 'Order not found' });
     }
     res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    await order.deleteOne();
+    res.json({ message: 'Order deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

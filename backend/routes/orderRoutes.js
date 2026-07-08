@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
-const { placeOrder, getMyOrders, getOrderById } = require('../controllers/orderController');
+const { placeOrder, getMyOrders, getOrderById, deleteOrder } = require('../controllers/orderController');
 const { protect, isAdmin } = require('../middleware/authMiddleware');
 
 router.post('/', protect, placeOrder);
@@ -23,6 +23,8 @@ router.put('/admin/:id', protect, isAdmin, async (req, res) => {
   res.json(updated);
 });
 
-router.get('/:id', protect, getOrderById);  
+router.delete('/admin/:id', protect, isAdmin, deleteOrder);
 
-module.exports = router;  
+router.get('/:id', protect, getOrderById);
+
+module.exports = router;
