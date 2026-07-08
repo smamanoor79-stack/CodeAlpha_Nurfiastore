@@ -1,6 +1,6 @@
 const isProd = window.location.hostname !== 'localhost';
 export const BASE_URL = isProd
-  ? 'https://nurfia-backend.bonto.run'
+  ? 'https://nurfiastore-backend.bonto.run'
   : 'http://localhost:5000';
 
 export function getImageUrl(imagePath) {
