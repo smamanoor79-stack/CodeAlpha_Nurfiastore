@@ -105,7 +105,7 @@ npm run dev
 
 ## Live Demo
 
-https://nurfia-ecommerce-store.vercel.app
+https://nurfiastore.vercel.app
 
 Deployed on a free tier, May take some seconds to awake the backend from sleep!
 ---
