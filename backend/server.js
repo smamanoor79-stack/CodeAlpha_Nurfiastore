@@ -10,8 +10,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'https://nurfiastore.vercel.app',
-  'https://nurfia-ecommerce-store.vercel.app',
-  'https://nurfia-adminpanel.vercel.app'
+  'https://nurfiaadmin.vercel.app'
 ];
 
 app.use(cors({
